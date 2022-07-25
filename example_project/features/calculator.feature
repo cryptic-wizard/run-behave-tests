@@ -1,7 +1,7 @@
 Feature: calculator
-Simple calculator for adding and subtracting **2** numbers
+Gherkin tests for the calculator class
 
-[calculator.feature](https://github.com/cryptic-wizard/run-behave-tests/blob/main/run_behave_tests/Features/Calculator.feature)
+[calculator.feature](https://github.com/cryptic-wizard/run-behave-tests/blob/main/example_project/features/calculator.feature)
 ***Further read***: **[Learn more about how to use Behave with python](https://behave.readthedocs.io/en/stable/api.html)**
 
 @mytag

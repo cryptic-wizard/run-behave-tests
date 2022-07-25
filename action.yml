@@ -1,0 +1,95 @@
+name: 'Run Behave Tests'
+description: 'A Github action to run Behave BDD (Behavioral Driven Development) tests for Python and generate test results'
+author: 'cryptic-wizard'
+branding:
+  icon: check-square
+  color: green
+
+inputs:
+  #python-version: TODO when composite action supports 'uses'
+    #description: "See [actions/python-versions](https://github.com/actions/python-versions/blob/main/versions-manifest.json) for supported versions"
+    #required: true
+    #default: 3.10.5
+  project-path:
+    description: "Path of the project directory if not in root (example: example_project or src)"
+    required: false
+    default: 'null'
+  dependencies-name:
+    description: "Name of dependencies file (example: requirements.txt)"
+    required: false
+    default: 'requirements.txt'
+  test-path:
+    description: "Path of the features parent folder relative to the project directory (example: tests (if example_project/tests/features))"
+    required: false
+    default: 'null'
+  test-output-name:
+    description: "Name of the output file (example: results.txt or plain.output)"
+    required: false
+    default: results.txt
+  flake8-warnings:
+    description: "Set to false to disable flake8 warnings"
+    default: true
+  #documentation-package: TODO
+    #description: "Name of documentation package (example: inkpot==2.2.0)"
+    #required: false
+    #default: 'null'
+  #documentation-files: TODO
+    #description: "Name of files to target for documentation"
+    #required: false
+    #default: 'null'
+  #documentation-output-name: TODO
+    #description: "Name of documentation outputs"
+    #required: false
+    #default: 'null'
+  #upload-artifact: TODO when composite action supports 'uses'
+    #description: "Set to false to disable uploading artifact automatically"
+    #required: false
+    #default: true
+
+runs:
+  using: composite
+  steps:
+    #- name: Checkout TODO when composite action supports 'uses'
+      #uses: actions/checkout@v3
+    #- name: Install Python TODO when composite action supports 'uses'
+      #uses: actions/setup-python@v4
+      #with:
+        #python-version: ${{ inputs.python-version }}
+    - name: Switch to Project Directory
+      run: |
+        if [ ${{ inputs.project-path }} != 'null' ]; then
+          cd ${{ inputs.project-path }}
+        fi
+    - name: Install Project Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f ${{ inputs.dependencies-name }} ]; then 
+          pip install -r ${{ inputs.dependencies-name }}
+        else
+          echo 'Dependencies file ' ${{ inputs.dependencies-name }} ' not found'
+        fi
+    - name: Check for Python Syntax Errors w/flake8
+      run: |
+        pip install flake8
+        # Fail the build if there are Python syntax errors or undefined names
+        flake8 . --count --statistics --show-source --select=E9,F63,F7,F82
+    - name: Check for Python Syntax Warnings w/flake8
+      run: |
+        if [ ${{ inputs.flake8-warnings}} != false ]; then
+          # exit-zero disables failing if warnings are found
+          flake8 . --count --statistics --exit-zero --select=E712,F401
+        fi
+    - name: Switch to Test Directory
+      run: |
+        if [ ${{ inputs.test-path }} != 'null' ]; then
+          cd ${{ inputs.test-path }}
+        fi
+    - name: Run Behave Tests
+      run: |
+        pip install behave
+        behave -o ${{ inputs.output-name }}
+    #- name: 'Publish Behave Test Results'
+      #uses: actions/upload-artifact@v2
+      #with:
+        #name: 'Behave Test Results'
+        #path: ${{ inputs.output-name }}

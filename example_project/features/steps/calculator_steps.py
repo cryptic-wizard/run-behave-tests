@@ -1,10 +1,10 @@
 '''
-Tests the calculator.py class
+Steps to test the calculator.py class
 '''
 from behave import *
 from sys import path
 
-# Locally import of the calculator class from this project
+# Locally import the calculator class from this project
 path.append('../..')
 from calculator import Calculator
 
