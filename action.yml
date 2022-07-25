@@ -56,6 +56,7 @@ runs:
       #with:
         #python-version: ${{ inputs.python-version }}
     - name: Install Project Dependencies
+      shell: bash
       run: |
         python -m pip install --upgrade pip
         if [ -f ${{ inputs.requirements-name }} ]; then 
@@ -63,27 +64,24 @@ runs:
         else
           echo 'Requirements file ' ${{ inputs.requirements-name }} ' not found'
         fi
+    - name: Check for Python Syntax Errors and Warnings w/flake8
       shell: bash
-    - name: Check for Python Syntax Errors w/flake8
       run: |
         pip install flake8
         # Fail the build if there are Python syntax errors or undefined names
         flake8 . --count --statistics --show-source --select=E9,F63,F7,F82
-    - name: Check for Python Syntax Warnings w/flake8
-      run: |
         if [ ${{ inputs.flake8-warnings}} != false ]; then
           # exit-zero disables failing if warnings are found
           flake8 . --count --statistics --exit-zero --select=E712,F401
         fi
-      shell: bash
     - name: Run Behave Tests
+      shell: bash
       run: |
         if [ ${{ inputs.test-path }} != 'null' ]; then
           cd ${{ inputs.test-path }}
         fi
         pip install behave
         behave -o ${{ inputs.output-name }}
-      shell: bash
     #- name: 'Publish Behave Test Results'
       #uses: actions/upload-artifact@v2
       #with:
