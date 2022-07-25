@@ -21,7 +21,7 @@ steps:
 - uses: actions/setup-python@v4
   with:
     python-version: 3.10.5
-- uses: actions/cryptic-wizard/run-behave-tests@v0.1.0
+- uses: cryptic-wizard/run-behave-tests@v0.1.0
   with:
     project-path: example_project
     test-output-name: results.txt
