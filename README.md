@@ -28,7 +28,6 @@ steps:
     python-version: 3.10.5
 - uses: cryptic-wizard/run-behave-tests@v0.1.1
   with:
-    project-path: example_project
     test-path: example_project
     test-output-name: results.txt
  - uses: actions/upload-artifact@v3
@@ -54,7 +53,6 @@ jobs:
       python-version: 3.10.5
   - uses: cryptic-wizard/run-behave-tests@v0.1.1
     with:
-      project-path: example_project
       test-path: example_project
       test-output-name: ${{ matrix.os }}.txt
   - uses: actions/upload-artifact@v3
@@ -86,7 +84,6 @@ jobs:
       python-version: ${{ matrix.python-version }}
   - uses: cryptic-wizard/run-behave-tests@v0.1.1
     with:
-      project-path: example_project
       test-path: example_project
       test-output-name: ${{ matrix.os }}-${{ matrix.python-version }}.txt
   - uses: actions/upload-artifact@v3
@@ -98,9 +95,8 @@ jobs:
 
 ## Features
 #### Recently Added
-* v0.1.0 - Basic inputs
+* v0.1.1 - Basic inputs
 ```yaml
-project-path:
 requirements-name:
 test-path:
 test-output-name:
@@ -112,10 +108,6 @@ Features planned when ['uses' keyword is implemented in composite actions](https
 * Checkout automatically
 * Setup python automatically
 * Upload artifacts automatically
-
-#### Planned Documentation Features
-* Add support for inkpot
-* Add support for other documentation packages
 
 ## Tools
 * [Python 3.10.5](https://www.python.org/downloads/)

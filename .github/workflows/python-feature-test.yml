@@ -1,14 +1,10 @@
-name: Python 3.10.5 OS Matrix
+name: Python 3.10.5 Minimal
 on: [push]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    name: Build and Test
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]    
+    name: Build
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -20,13 +16,14 @@ jobs:
       - name: Run Behave Tests
         uses: cryptic-wizard/run-behave-tests@v0.1.0-beta4
         with:
-          requirements-name: example_project/requirements.txt
+          requirements-name: example_project/error.txt
           test-path: example_project
-          test-output-name: ${{ matrix.os }}.txt
+          test-output-name: special_name.txt
+          flake8-warnings: false
       - name: Upload Behave Test Results
         if: success() || failure()
         uses: actions/upload-artifact@v3
         with:
           name: behave_results
           path: |
-            example_project/${{ matrix.os }}.txt
+            example_project/special_name.txt

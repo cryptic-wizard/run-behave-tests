@@ -1,5 +1,5 @@
 name: 'Run Behave Tests'
-description: 'A Github action to run Behave BDD (Behavioral Driven Development) tests for Python and generate test results'
+description: 'A Github action to run Behave Behavioral Driven Development (BDD) tests for Python and generate test results'
 author: 'cryptic-wizard'
 branding:
   icon: check-square
@@ -10,10 +10,6 @@ inputs:
     #description: "See [actions/python-versions](https://github.com/actions/python-versions/blob/main/versions-manifest.json) for supported versions"
     #required: true
     #default: 3.10.5
-  project-path:
-    description: "Path of the project directory if not in root (example: example_project or src/example_project)"
-    required: false
-    default: 'null'
   requirements-name:
     description: "Name of dependencies file (example: requirements.txt or example_project/requirements.txt or src/example_project/requirements.txt)"
     required: false
@@ -82,7 +78,7 @@ runs:
         fi
         pip install behave
         behave -o ${{ inputs.test-output-name }}
-    #- name: 'Publish Behave Test Results'
+    #- name: Publish Behave Test Results TODO when composite action supports 'uses'
       #uses: actions/upload-artifact@v2
       #with:
         #name: 'Behave Test Results'

@@ -16,9 +16,8 @@ jobs:
       - name: Run Behave Tests
         uses: cryptic-wizard/run-behave-tests@v0.1.0-beta4
         with:
-          project-path: example_project
-          test-path: example_project
           requirements-name: example_project/requirements.txt
+          test-path: example_project
       - name: Upload Behave Test Results
         if: success() || failure()
         uses: actions/upload-artifact@v3
