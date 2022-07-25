@@ -1,8 +1,12 @@
 # run-behave-tests
-A Github action to run Behave BDD (Behavioral Driven Development) tests for Python
+A Github action to run Behave [Behavioral Driven Development](https://behave.readthedocs.io/en/stable/philosophy.html) tests for Python
 
 ## Tests
-[![Python 3.10.5](https://github.com/cryptic-wizard/run-behave-tests/actions/workflows/python.yml/badge.svg?branch=main)](https://github.com/cryptic-wizard/run-behave-tests/actions/workflows/python.yml)
+[![Python 3.10.5 Minimal](https://github.com/cryptic-wizard/run-behave-tests/actions/workflows/python-minimal.yml/badge.svg)](https://github.com/cryptic-wizard/run-behave-tests/actions/workflows/python-minimal.yml)
+
+[![Python 3.10.5 OS Matrix](https://github.com/cryptic-wizard/run-behave-tests/actions/workflows/python-os-matrix.yml/badge.svg)](https://github.com/cryptic-wizard/run-behave-tests/actions/workflows/python-os-matrix.yml)
+
+[![Python Complex Matrix](https://github.com/cryptic-wizard/run-behave-tests/actions/workflows/python-complex-matrix.yml/badge.svg)](https://github.com/cryptic-wizard/run-behave-tests/actions/workflows/python-complex-matrix.yml)
 
 ## Usage
 ### Example Project Structure
@@ -11,9 +15,9 @@ A Github action to run Behave BDD (Behavioral Driven Development) tests for Pyth
     * [behave.ini](https://behave.readthedocs.io/en/stable/behave.html#configuration-files)
     * my_class_to_test.py
     * features/
-        * my_tests.feature
+        * [my_tests.feature](https://behave.readthedocs.io/en/stable/gherkin.html#gherkin-feature-testing-language)
         * steps/
-            * my_steps.py
+            * [my_steps.py](https://behave.readthedocs.io/en/stable/api.html#step-functions)
 
 ### [Minimal](https://github.com/cryptic-wizard/run-behave-tests/blob/main/.github/workflows/python-minimal.yml)
 ```yaml
@@ -31,17 +35,17 @@ steps:
    if: success() || failure()
    with:
     name: behave_results
-    path: results.txt
+    path: example_project/results.txt
 ```
-### [Operating System Matrix Testing](https://github.com/cryptic-wizard/run-behave-tests/blob/main/.github/workflows/python-os-matrix.yml)
+### [OS Matrix Testing](https://github.com/cryptic-wizard/run-behave-tests/blob/main/.github/workflows/python-os-matrix.yml)
 ```yaml
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
     
   steps:
   - uses: actions/checkout@v3
@@ -57,7 +61,39 @@ jobs:
     if: success() || failure()
     with:
       name: behave_results
-      path: ${{ matrix.os }}.html
+      path: example_project/${{ matrix.os }}.txt
+```
+### [Complex Matrix Testing](https://github.com/cryptic-wizard/run-behave-tests/blob/main/.github/workflows/python-complex-matrix.yml)
+```yaml
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.8', '3.9', '3.10.5']
+        exclude:
+          - os: ubuntu-latest
+            python-version: '3.9'
+          - os: windows-latest
+            python-version: '3.10.5'
+
+  steps:
+  - uses: actions/checkout@v3
+  - uses: actions/setup-python@v4
+    with:
+      python-version: ${{ matrix.python-version }}
+  - uses: cryptic-wizard/run-behave-tests@v0.1.1
+    with:
+      project-path: example_project
+      test-path: example_project
+      test-output-name: ${{ matrix.os }}.txt
+  - uses: actions/upload-artifact@v3
+    if: success() || failure()
+    with:
+      name: behave_results
+      path: example_project/${{ matrix.os }}-${{ matrix.python-version }}.txt
 ```
 
 ## Features

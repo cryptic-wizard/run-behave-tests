@@ -1,8 +1,6 @@
 Feature: calculator
 Gherkin tests for the calculator class
-
-[calculator.feature](https://github.com/cryptic-wizard/run-behave-tests/blob/main/example_project/features/calculator.feature)
-***Further read***: **[Learn more about how to use Behave with python](https://behave.readthedocs.io/en/stable/api.html)**
+https://cucumber.io/docs/gherkin/reference/
 
 @mytag
 Scenario Outline: Add two numbers
