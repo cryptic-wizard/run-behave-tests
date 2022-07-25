@@ -63,6 +63,7 @@ runs:
         else
           echo 'Requirements file ' ${{ inputs.requirements-name }} ' not found'
         fi
+      shell: bash
     - name: Check for Python Syntax Errors w/flake8
       run: |
         pip install flake8
@@ -74,6 +75,7 @@ runs:
           # exit-zero disables failing if warnings are found
           flake8 . --count --statistics --exit-zero --select=E712,F401
         fi
+      shell: bash
     - name: Run Behave Tests
       run: |
         if [ ${{ inputs.test-path }} != 'null' ]; then
@@ -81,6 +83,7 @@ runs:
         fi
         pip install behave
         behave -o ${{ inputs.output-name }}
+      shell: bash
     #- name: 'Publish Behave Test Results'
       #uses: actions/upload-artifact@v2
       #with:
