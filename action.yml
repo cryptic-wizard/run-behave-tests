@@ -81,7 +81,7 @@ runs:
           cd ${{ inputs.test-path }}
         fi
         pip install behave
-        behave -o ${{ inputs.output-name }}
+        behave -o ${{ inputs.test-output-name }}
     #- name: 'Publish Behave Test Results'
       #uses: actions/upload-artifact@v2
       #with:
