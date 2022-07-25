@@ -32,11 +32,12 @@ jobs:
       - name: Run Behave Tests
         run: |
           pip install behave
-          behave
+          cd example_project
+          behave -o results.txt
       - name: Upload Behave Test Results
         if: success() || failure()
         uses: actions/upload-artifact@v2
         with:
           name: behave_results
           path: |
-            tests/plain.output
+            example_project/results.txt
