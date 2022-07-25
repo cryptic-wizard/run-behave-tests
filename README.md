@@ -24,7 +24,7 @@ steps:
 - uses: actions/cryptic-wizard/run-behave-tests@v0.1.0
   with:
     project-path: example_project
-    output-name: results.txt
+    test-output-name: results.txt
  - uses: actions/upload-artifact@v2
    if: success() || failure()
    with:
@@ -37,7 +37,7 @@ steps:
 * v0.1.0 - Basic inputs
 ```yaml
 project-path:
-dependencies-name:
+requirements-name:
 test-path:
 test-output-name:
 flake8-warnings:
