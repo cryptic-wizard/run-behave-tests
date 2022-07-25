@@ -26,7 +26,7 @@ steps:
 - uses: actions/setup-python@v4
   with:
     python-version: 3.10.5
-- uses: cryptic-wizard/run-behave-tests@v0.1.1
+- uses: cryptic-wizard/run-behave-tests@v0.2.0
   with:
     test-path: example_project
     test-output-name: results.txt
@@ -51,7 +51,7 @@ jobs:
   - uses: actions/setup-python@v4
     with:
       python-version: 3.10.5
-  - uses: cryptic-wizard/run-behave-tests@v0.1.1
+  - uses: cryptic-wizard/run-behave-tests@v0.2.0
     with:
       test-path: example_project
       test-output-name: ${{ matrix.os }}.txt
@@ -82,7 +82,7 @@ jobs:
   - uses: actions/setup-python@v4
     with:
       python-version: ${{ matrix.python-version }}
-  - uses: cryptic-wizard/run-behave-tests@v0.1.1
+  - uses: cryptic-wizard/run-behave-tests@v0.2.0
     with:
       test-path: example_project
       test-output-name: ${{ matrix.os }}-${{ matrix.python-version }}.txt
@@ -95,7 +95,7 @@ jobs:
 
 ## Features
 #### Recently Added
-* v0.1.1 - Basic inputs
+* v0.2.0 - Basic inputs
 ```yaml
 requirements-name:
 test-path:
