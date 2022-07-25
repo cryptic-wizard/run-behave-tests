@@ -1,4 +1,4 @@
-name: Python 3.10.5
+name: Python 3.10.5 Minimal
 on: [push]
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
           requirements-name: example_project/requirements.txt
       - name: Upload Behave Test Results
         if: success() || failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: behave_results
           path: |
