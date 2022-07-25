@@ -88,7 +88,7 @@ jobs:
     with:
       project-path: example_project
       test-path: example_project
-      test-output-name: ${{ matrix.os }}.txt
+      test-output-name: ${{ matrix.os }}-${{ matrix.python-version }}.txt
   - uses: actions/upload-artifact@v3
     if: success() || failure()
     with:
