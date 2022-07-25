@@ -32,7 +32,6 @@ jobs:
       - name: Run Behave Tests
         run: |
           pip install behave
-          cd tests
           behave
       - name: Upload Behave Test Results
         if: success() || failure()
