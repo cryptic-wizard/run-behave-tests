@@ -22,9 +22,6 @@ inputs:
     description: "Name of the output file (example: results.txt or plain.output)"
     required: false
     default: results.txt
-  flake8-warnings:
-    description: "Set to false to disable flake8 warnings"
-    default: true
   #documentation-package: TODO
     #description: "Name of documentation package (example: inkpot==2.2.0)"
     #required: false
@@ -59,16 +56,6 @@ runs:
           pip install -r ${{ inputs.requirements-name }}
         else
           echo 'Requirements file ' ${{ inputs.requirements-name }} ' not found'
-        fi
-    - name: Check for Python Syntax Errors and Warnings w/flake8
-      shell: bash
-      run: |
-        pip install flake8
-        # Fail the build if there are Python syntax errors or undefined names
-        flake8 . --count --statistics --show-source --select=E9,F63,F7,F82
-        if [ ${{ inputs.flake8-warnings}} != false ]; then
-          # exit-zero disables failing if warnings are found
-          flake8 . --count --statistics --exit-zero --select=E712,F401
         fi
     - name: Run Behave Tests
       shell: bash

@@ -19,7 +19,6 @@ jobs:
           requirements-name: example_project/error.txt
           test-path: example_project
           test-output-name: special_name.txt
-          flake8-warnings: false
       - name: Upload Behave Test Results
         if: success() || failure()
         uses: actions/upload-artifact@v3
