@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: 3.10.5
       - name: Run Behave Tests
-        uses: cryptic-wizard/run-behave-tests@v0.2.0
+        uses: cryptic-wizard/run-behave-tests@v0.2.1
         with:
           requirements-name: example_project/requirements.txt
           test-path: example_project
