@@ -52,6 +52,7 @@ runs:
 
         args=()
         ARTIFACT_FULL_PATH=${{ inputs.test-output-name }}
+        echo "Artifact full path = $ARTIFACT_FULL_PATH"
         [ "${{ inputs.test-path }}" != 'null' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }}
         args+=("-o" "${{ inputs.test-output-name }}")
         echo "Artifact full path = $ARTIFACT_FULL_PATH"
@@ -63,4 +64,4 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: 'Behave Test Results'
-        path: ${{ env.ARTIFACT_FULL_PATH }}
+        path: ${{ steps.vars.outputs.ARTIFACT_FULL_PATH }}
