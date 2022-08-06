@@ -17,7 +17,7 @@ inputs:
   test-path:
     description: "Path of the features parent folder if not in root (example: example_project (if example_project/features) or src/example_project/tests (if src/example_project/tests/features))"
     required: false
-    default: ''
+    default: 'null'
   test-output-name:
     description: "Name of the output file (example: results.txt or plain.output)"
     required: false
@@ -40,7 +40,7 @@ runs:
       shell: bash
       run: |
         python -m pip install --upgrade pip
-        if [ -f ${{ inputs.requirements-name }} ]; then 
+        if [ -f ${{ inputs.requirements-name }} ]; then
           pip install -r ${{ inputs.requirements-name }}
         else
           echo 'Requirements file ' ${{ inputs.requirements-name }} ' not found'
@@ -53,7 +53,7 @@ runs:
         pip install behave
 
         args=()
-        [ "${{ inputs.test-path }}" != '' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }}
+        [ "${{ inputs.test-path }}" != 'null' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }}
         args+=("-o" "${{ inputs.test-output-name }}")
         echo "Artifact full path = $ARTIFACT_FULL_PATH"
 
