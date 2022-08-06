@@ -17,11 +17,11 @@ inputs:
   test-path:
     description: "Path of the features parent folder if not in root (example: example_project (if example_project/features) or src/example_project/tests (if src/example_project/tests/features))"
     required: false
-    default: 'null'
+    default: ''
   test-output-name:
     description: "Name of the output file (example: results.txt or plain.output)"
     required: false
-    default: results.txt
+    default: 'results.txt'
   upload-artifact:
     description: "Set to false to disable uploading artifact automatically"
     required: false
@@ -50,20 +50,17 @@ runs:
       id: run-behave-tests
       run: |
         pip install behave
+        BEHAVE_ARTIFACT_FULL_PATH=${{ inputs.test-output-name }}
+        [ "${{ inputs.test-path }}" != '' ] && BEHAVE_ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }} && cd ${{ inputs.test-path }} 
 
         args=()
-        ARTIFACT_FULL_PATH=${{ inputs.test-output-name }}
-        echo "Artifact full path = $ARTIFACT_FULL_PATH"
-        [ "${{ inputs.test-path }}" != 'null' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }}
         args+=("-o" "${{ inputs.test-output-name }}")
-        echo "Artifact full path = $ARTIFACT_FULL_PATH"
-        echo ::set-output name=ARTIFACT_FULL_PATH::$ARTIFACT_FULL_PATH
-
+        echo "Behave artifact full path = $BEHAVE_ARTIFACT_FULL_PATH"
+        echo ::set-output name=BEHAVE_ARTIFACT_FULL_PATH::$BEHAVE_ARTIFACT_FULL_PATH
         behave "${args[@]}"
     - name: Publish Behave Test Results
-      if: ${{ inputs.upload-artifact == 'true' }}
+      if: ${{ inputs.upload-artifact == true }}
       uses: actions/upload-artifact@v3
       with:
         name: 'Behave Test Results'
-        variables: 
-        path: ${{ steps.run-behave-tests.outputs.ARTIFACT_FULL_PATH }}
+        path: ${{ steps.run-behave-tests.outputs.BEHAVE_ARTIFACT_FULL_PATH }}
