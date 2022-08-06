@@ -92,10 +92,7 @@ test-output-name:
 ```
 
 #### Planned Automation Features
-Features planned when ['uses' keyword is implemented in composite actions](https://github.com/actions/runner/issues/646)
-* Checkout automatically
-* Setup python automatically
-* Upload artifacts automatically
+* Additional behave arguments
 
 ## Tools
 * [Python 3.10.5](https://www.python.org/downloads/)
