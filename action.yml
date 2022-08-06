@@ -52,7 +52,7 @@ runs:
 
         args=()
         ARTIFACT_FULL_PATH=${{ inputs.test-output-name }}
-        [ "${{ inputs.test-path }}" != '' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }})
+        [ "${{ inputs.test-path }}" != '' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }}
         args+=("-o" "${{ inputs.test-output-name }}")
 
         behave "${args[@]}"
