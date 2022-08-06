@@ -59,7 +59,7 @@ runs:
         echo ::set-output name=BEHAVE_ARTIFACT_FULL_PATH::$BEHAVE_ARTIFACT_FULL_PATH
         behave "${args[@]}"
     - name: Publish Behave Test Results
-      if: ${{ inputs.upload-artifact == true }}
+      if: ${{ inputs.upload-artifact == 'true' }}
       uses: actions/upload-artifact@v3
       with:
         name: 'Behave Test Results'
