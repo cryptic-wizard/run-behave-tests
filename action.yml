@@ -51,6 +51,7 @@ runs:
         ARTIFACT_FULL_PATH: ${{ inputs.test-output-name }}
       run: |
         pip install behave
+        echo "Artifact full path = $ARTIFACT_FULL_PATH"
 
         args=()
         [ "${{ inputs.test-path }}" != 'null' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }}
