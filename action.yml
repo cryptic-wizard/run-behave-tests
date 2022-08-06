@@ -62,6 +62,8 @@ runs:
     - name: Publish Behave Test Results
       if: ${{ inputs.upload-artifact == 'true' }}
       uses: actions/upload-artifact@v3
+      env:
+        ARTIFACT_FULL_PATH
       with:
         name: 'Behave Test Results'
         path: ${{ env.ARTIFACT_FULL_PATH }}
