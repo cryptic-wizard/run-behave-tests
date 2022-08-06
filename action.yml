@@ -47,23 +47,20 @@ runs:
         fi
     - name: Run Behave Tests
       shell: bash
-      env:
-        ARTIFACT_FULL_PATH: ${{ inputs.test-output-name }}
       run: |
         pip install behave
-        echo "Artifact full path = $ARTIFACT_FULL_PATH"
 
         args=()
+        ARTIFACT_FULL_PATH=${{ inputs.test-output-name }}
         [ "${{ inputs.test-path }}" != 'null' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }}
         args+=("-o" "${{ inputs.test-output-name }}")
         echo "Artifact full path = $ARTIFACT_FULL_PATH"
+        ::set-output name=ARTIFACT_FULL_PATH::ARTIFACT_FULL_PATH
 
         behave "${args[@]}"
     - name: Publish Behave Test Results
       if: ${{ inputs.upload-artifact == 'true' }}
       uses: actions/upload-artifact@v3
-      env:
-        ARTIFACT_FULL_PATH
       with:
         name: 'Behave Test Results'
         path: ${{ env.ARTIFACT_FULL_PATH }}
