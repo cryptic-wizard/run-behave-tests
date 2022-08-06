@@ -53,7 +53,7 @@ runs:
         pip install behave
 
         args=()
-        [ "${{ inputs.test-path }}" != '' ] && cd ${{ inputs.test-path }} && $ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }}
+        [ "${{ inputs.test-path }}" != '' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }}
         args+=("-o" "${{ inputs.test-output-name }}")
         echo "Artifact full path = $ARTIFACT_FULL_PATH"
 
