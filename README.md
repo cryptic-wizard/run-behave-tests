@@ -26,15 +26,10 @@ steps:
 - uses: actions/setup-python@v4
   with:
     python-version: 3.10.5
-- uses: cryptic-wizard/run-behave-tests@v0.2.1
+- uses: cryptic-wizard/run-behave-tests@v0.3.0
   with:
     test-path: example_project
     test-output-name: results.txt
- - uses: actions/upload-artifact@v3
-   if: success() || failure()
-   with:
-    name: behave_results
-    path: example_project/results.txt
 ```
 ### [OS Matrix Testing](https://github.com/cryptic-wizard/run-behave-tests/blob/main/.github/workflows/python-os-matrix.yml)
 ```yaml
@@ -51,15 +46,10 @@ jobs:
   - uses: actions/setup-python@v4
     with:
       python-version: 3.10.5
-  - uses: cryptic-wizard/run-behave-tests@v0.2.1
+  - uses: cryptic-wizard/run-behave-tests@v0.3.0
     with:
       test-path: example_project
       test-output-name: ${{ matrix.os }}.txt
-  - uses: actions/upload-artifact@v3
-    if: success() || failure()
-    with:
-      name: behave_results
-      path: example_project/${{ matrix.os }}.txt
 ```
 ### [Complex Matrix Testing](https://github.com/cryptic-wizard/run-behave-tests/blob/main/.github/workflows/python-complex-matrix.yml)
 ```yaml
@@ -82,19 +72,18 @@ jobs:
   - uses: actions/setup-python@v4
     with:
       python-version: ${{ matrix.python-version }}
-  - uses: cryptic-wizard/run-behave-tests@v0.2.1
+  - uses: cryptic-wizard/run-behave-tests@v0.3.0
     with:
       test-path: example_project
       test-output-name: ${{ matrix.os }}-${{ matrix.python-version }}.txt
-  - uses: actions/upload-artifact@v3
-    if: success() || failure()
-    with:
-      name: behave_results
-      path: example_project/${{ matrix.os }}-${{ matrix.python-version }}.txt
 ```
 
 ## Features
 #### Recently Added
+* v0.3.0 - Automatic artifact upload
+```yaml
+upload-artifact: Set to false to disable uploading artifact automatically
+```
 * v0.2.0 - Basic inputs
 ```yaml
 requirements-name:

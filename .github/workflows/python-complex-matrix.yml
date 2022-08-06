@@ -24,15 +24,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Run Behave Tests
-        uses: cryptic-wizard/run-behave-tests@v0.2.1
+        uses: ./
         with:
           requirements-name: example_project/requirements.txt
           test-path: example_project
           test-output-name: ${{ matrix.os }}-${{ matrix.python-version }}.txt
-      - name: Upload Behave Test Results
-        if: success() || failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: behave_results
-          path: |
-            example_project/${{ matrix.os }}-${{ matrix.python-version }}.txt

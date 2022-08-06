@@ -17,27 +17,15 @@ inputs:
   test-path:
     description: "Path of the features parent folder if not in root (example: example_project (if example_project/features) or src/example_project/tests (if src/example_project/tests/features))"
     required: false
-    default: 'null'
+    default: ''
   test-output-name:
     description: "Name of the output file (example: results.txt or plain.output)"
     required: false
     default: results.txt
-  #documentation-package: TODO
-    #description: "Name of documentation package (example: inkpot==2.2.0)"
-    #required: false
-    #default: 'null'
-  #documentation-files: TODO
-    #description: "Name of files to target for documentation"
-    #required: false
-    #default: 'null'
-  #documentation-output-name: TODO
-    #description: "Name of documentation outputs"
-    #required: false
-    #default: 'null'
-  #upload-artifact: TODO when composite action supports 'uses'
-    #description: "Set to false to disable uploading artifact automatically"
-    #required: false
-    #default: true
+  upload-artifact:
+    description: "Set to false to disable uploading artifact automatically"
+    required: false
+    default: true
 
 runs:
   using: composite
@@ -60,13 +48,17 @@ runs:
     - name: Run Behave Tests
       shell: bash
       run: |
-        if [ ${{ inputs.test-path }} != 'null' ]; then
-          cd ${{ inputs.test-path }}
-        fi
         pip install behave
-        behave -o ${{ inputs.test-output-name }}
-    #- name: Publish Behave Test Results TODO when composite action supports 'uses'
-      #uses: actions/upload-artifact@v2
-      #with:
-        #name: 'Behave Test Results'
-        #path: ${{ inputs.output-name }}
+
+        args=()
+        ARTIFACT_FULL_PATH=${{ inputs.test-output-name }}
+        [ "${{ inputs.test-path }}" != '' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }})
+        args+=("-o" "${{ inputs.test-output-name }}")
+
+        behave "${args[@]}"
+    - name: Publish Behave Test Results
+      if: ${{ inputs.upload-artifact == 'true' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'Behave Test Results'
+        path: ARTIFACT_FULL_PATH
