@@ -82,7 +82,7 @@ jobs:
 #### Recently Added
 * v0.3.0 - Automatic artifact upload
 ```yaml
-upload-artifact: Set to false to disable uploading artifact automatically
+upload-artifact: true by default
 ```
 * v0.2.0 - Basic inputs
 ```yaml
