@@ -47,6 +47,7 @@ runs:
         fi
     - name: Run Behave Tests
       shell: bash
+      id: run-behave-tests
       run: |
         pip install behave
 
@@ -64,4 +65,5 @@ runs:
       uses: actions/upload-artifact@v3
       with:
         name: 'Behave Test Results'
-        path: ${{ steps.vars.outputs.ARTIFACT_FULL_PATH }}
+        variables: 
+        path: ${{ steps.run-behave-tests.outputs.ARTIFACT_FULL_PATH }}
