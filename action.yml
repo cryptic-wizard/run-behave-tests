@@ -56,7 +56,7 @@ runs:
         [ "${{ inputs.test-path }}" != 'null' ] && cd ${{ inputs.test-path }} && ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }}
         args+=("-o" "${{ inputs.test-output-name }}")
         echo "Artifact full path = $ARTIFACT_FULL_PATH"
-        echo ::set-output name=ARTIFACT_FULL_PATH::ARTIFACT_FULL_PATH
+        echo ::set-output name=ARTIFACT_FULL_PATH::$ARTIFACT_FULL_PATH
 
         behave "${args[@]}"
     - name: Publish Behave Test Results
