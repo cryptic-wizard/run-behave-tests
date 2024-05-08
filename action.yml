@@ -31,9 +31,9 @@ runs:
   using: composite
   steps:
     #- name: Checkout TODO when composite action supports 'uses'
-      #uses: actions/checkout@v3
+      #uses: actions/checkout@v4
     #- name: Install Python TODO when composite action supports 'uses'
-      #uses: actions/setup-python@v4
+      #uses: actions/setup-python@v5
       #with:
         #python-version: ${{ inputs.python-version }}
     - name: Install Project Dependencies
@@ -60,7 +60,7 @@ runs:
         behave "${args[@]}"
     - name: Publish Behave Test Results
       if: ${{ inputs.upload-artifact == 'true' }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: 'Behave Test Results'
         path: ${{ steps.run-behave-tests.outputs.BEHAVE_ARTIFACT_FULL_PATH }}
