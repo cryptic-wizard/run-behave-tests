@@ -56,7 +56,7 @@ runs:
         args=()
         args+=("-o" "${{ inputs.test-output-name }}")
         echo "Behave artifact full path = $BEHAVE_ARTIFACT_FULL_PATH"
-        echo ::set-output name=BEHAVE_ARTIFACT_FULL_PATH::$BEHAVE_ARTIFACT_FULL_PATH
+        echo "BEHAVE_ARTIFACT_FULL_PATH=$BEHAVE_ARTIFACT_FULL_PATH" >> $GITHUB_OUTPUT
         behave "${args[@]}"
     - name: Publish Behave Test Results
       if: ${{ inputs.upload-artifact == 'true' }}
