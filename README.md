@@ -22,8 +22,8 @@ A Github action to run Behave [Behavioral Driven Development](https://behave.rea
 ### [Minimal](https://github.com/cryptic-wizard/run-behave-tests/blob/main/.github/workflows/python-minimal.yml)
 ```yaml
 steps:
-- uses: actions/checkout@v3
-- uses: actions/setup-python@v4
+- uses: actions/checkout@v4
+- uses: actions/setup-python@v5
   with:
     python-version: 3.10.5
 - uses: cryptic-wizard/run-behave-tests@v0.3.0
@@ -42,8 +42,8 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     
   steps:
-  - uses: actions/checkout@v3
-  - uses: actions/setup-python@v4
+  - uses: actions/checkout@v4
+  - uses: actions/setup-python@v5
     with:
       python-version: 3.10.5
   - uses: cryptic-wizard/run-behave-tests@v0.3.0
@@ -68,8 +68,8 @@ jobs:
             python-version: '3.10.5'
 
   steps:
-  - uses: actions/checkout@v3
-  - uses: actions/setup-python@v4
+  - uses: actions/checkout@v4
+  - uses: actions/setup-python@v5
     with:
       python-version: ${{ matrix.python-version }}
   - uses: cryptic-wizard/run-behave-tests@v0.3.0
