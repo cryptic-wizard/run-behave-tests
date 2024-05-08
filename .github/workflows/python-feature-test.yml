@@ -1,4 +1,4 @@
-name: New Feature Testing
+name: Python 3.10.5 Feature Test
 on: [push]
 
 jobs:
