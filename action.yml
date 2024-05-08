@@ -50,12 +50,13 @@ runs:
       id: run-behave-tests
       run: |
         pip install behave -q
-        BEHAVE_ARTIFACT_FULL_PATH=${{ inputs.test-output-name }}
         TEST_OUTPUT_NAME=${{ inputs.test-output-name }}
+        BEHAVE_ARTIFACT_FULL_PATH=${{ inputs.test-output-name }}
         [ "${{ inputs.test-path }}" != '' ] && BEHAVE_ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }} && cd ${{ inputs.test-path }} 
 
         args=()
         args+=("-o" "${{ inputs.test-output-name }}")
+        echo "Behave artifact output name = $TEST_OUTPUT_NAME"
         echo "Behave artifact full path = $BEHAVE_ARTIFACT_FULL_PATH"
         echo "BEHAVE_ARTIFACT_FULL_PATH=$BEHAVE_ARTIFACT_FULL_PATH" >> $GITHUB_OUTPUT
         behave "${args[@]}"
