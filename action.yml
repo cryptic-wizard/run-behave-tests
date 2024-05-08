@@ -30,12 +30,6 @@ inputs:
 runs:
   using: composite
   steps:
-    #- name: Checkout TODO when composite action supports 'uses'
-      #uses: actions/checkout@v3
-    #- name: Install Python TODO when composite action supports 'uses'
-      #uses: actions/setup-python@v4
-      #with:
-        #python-version: ${{ inputs.python-version }}
     - name: Install Project Dependencies
       shell: bash
       run: |
@@ -50,17 +44,20 @@ runs:
       id: run-behave-tests
       run: |
         pip install behave -q
+        TEST_OUTPUT_NAME=${{ inputs.test-output-name }}
         BEHAVE_ARTIFACT_FULL_PATH=${{ inputs.test-output-name }}
         [ "${{ inputs.test-path }}" != '' ] && BEHAVE_ARTIFACT_FULL_PATH=${{ inputs.test-path }}/${{ inputs.test-output-name }} && cd ${{ inputs.test-path }} 
 
         args=()
         args+=("-o" "${{ inputs.test-output-name }}")
+        echo "Behave artifact output name = $TEST_OUTPUT_NAME"
         echo "Behave artifact full path = $BEHAVE_ARTIFACT_FULL_PATH"
-        echo ::set-output name=BEHAVE_ARTIFACT_FULL_PATH::$BEHAVE_ARTIFACT_FULL_PATH
+        echo "TEST_OUTPUT_NAME=$TEST_OUTPUT_NAME" >> $GITHUB_OUTPUT
+        echo "BEHAVE_ARTIFACT_FULL_PATH=$BEHAVE_ARTIFACT_FULL_PATH" >> $GITHUB_OUTPUT
         behave "${args[@]}"
     - name: Publish Behave Test Results
       if: ${{ inputs.upload-artifact == 'true' }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: 'Behave Test Results'
+        name: ${{ steps.run-behave-tests.outputs.TEST_OUTPUT_NAME }}
         path: ${{ steps.run-behave-tests.outputs.BEHAVE_ARTIFACT_FULL_PATH }}
